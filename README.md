@@ -15,6 +15,11 @@ This is simple:
     Pub.Sub["hello"](test);
     Console.ReadKey();
     
+    //prints:
+    //hi world
+    //hello world
+    //hello world
+    
 Be sure to:
 
     PM> Install-Package SuperSimplePubSub
