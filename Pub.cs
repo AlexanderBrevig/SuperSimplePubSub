@@ -18,16 +18,16 @@ namespace PubSub
     /// </summary>
     public class Pub
     {
-        private static Dictionary<string, List<Action<object>>> actions = new Dictionary<string, List<Action<object>>>();
+        private static Dictionary<object, List<Action<object>>> actions = new Dictionary<object, List<Action<object>>>();
 
         /// <summary>
         /// Subscribe a to a channel with a new Action, or publish an object to a channel
         /// Pub.Sub["channel"] = (ob) { /* subscribe */ };
         /// Pub.Sub["channel"]("publish");
         /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public Action<object> this[string key]
+        /// <param name="key">the name / id of the channel</param>
+        /// <returns>action to call when publishing</returns>
+        public Action<object> this[object key]
         {
             get
             {
@@ -50,7 +50,7 @@ namespace PubSub
             }
         }
 
-        public bool Remove(string key, Action<object> action)
+        public bool Remove(object key, Action<object> action)
         {
             if (actions.ContainsKey(key)) {
                 return actions[key].Remove(action);
@@ -58,7 +58,7 @@ namespace PubSub
             return false;
         }
 
-        public bool RemoveAll(string key, Action<object> action)
+        public bool RemoveAll(object key, Action<object> action)
         {
             if (actions.ContainsKey(key)) {
                 actions[key].Clear();
@@ -85,5 +85,6 @@ namespace PubSub
         private static object syncRoot = new Object();
 
         private Pub() { }
+
     }
 }
